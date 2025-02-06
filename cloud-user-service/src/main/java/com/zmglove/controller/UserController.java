@@ -35,13 +35,17 @@ public class UserController {
     }
 
 
+    @GetMapping("/get/v1/{id}")
+    public String getByIdV1(@PathVariable(value = "id") long id) {
+        ServiceInstance instance = loadBalancerClient.choose("cloud-payment-service");
+        String url = String.format("http://%s:%s/payment/getAll", instance.getHost(), instance.getPort());
+        String msg = restTemplate.getForObject(url, String.class);
+        return "V1 User[" + id + "]----" + msg;
+
+    }
+
     @GetMapping("/get/{id}")
     public String getById(@PathVariable("id") long id) {
-
-//        String msg = restTemplate.getForObject("http://localhost:8281/payment/getAll", String.class);
-
-//        ServiceInstance instance = loadBalancerClient.choose("cloud-payment-service");
-//        String url = String.format("http://%s:%s/payment/getAll", instance.getHost(), instance.getPort());
         String url = "http://cloud-payment-service/payment/getAll";
         String msg = restTemplate.getForObject(url, String.class);
         return "用户【" + id + "】---" + msg;

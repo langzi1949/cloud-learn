@@ -12,6 +12,7 @@
         <module>cloud-user-service</module>
         <module>cloud-order-service</module>
         <module>cloud-eureka-server</module>
+        <module>cloud-config-server</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

@@ -28,6 +28,9 @@ public class UserController {
     @Resource
     private LoadBalancerClient loadBalancerClient;
 
+    @Value("${user-info}")
+    private String userInfo;
+
     @Bean
     @LoadBalanced
     public RestTemplate fetchRestTemplate(RestTemplateBuilder restTemplateBuilder) {
@@ -56,5 +59,10 @@ public class UserController {
     public String getFeignById(@PathVariable("id") long id) {
         String msg = paymentFeignClient.getAll();
         return "用户【" + id + "】---" + msg;
+    }
+
+    @GetMapping("/get-config-info")
+    public String getConfigInfo() {
+        return "当前Config配置中心的数据为:" + userInfo;
     }
 }
